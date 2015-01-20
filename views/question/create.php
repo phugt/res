@@ -37,9 +37,9 @@ use yii\helpers\Url;
                             ?>
                             <?= $form->field($model, 'position') ?>
                             <?=
-                            $form->field($model, 'content')->widget(CKEditor::className(), [
+                            $form->field($model, 'content')->widget(\dosamigos\ckeditor\CKEditor::className(), [
                                 'options' => ['rows' => 6],
-                                'preset' => 'basic'
+                                'preset' => 'standard'
                             ])
                             ?>
                             <?= $form->field($model, 'time') ?>
