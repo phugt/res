@@ -23,7 +23,7 @@ class PlayController extends \yii\web\Controller {
 
         $player = \app\models\Player::findOne(['id' => session_id()]);
         if ($player == null) {
-            if (\app\models\Player::findOne(['name' => $name]) != null) {
+            if (\app\models\Player::find()->where(['name' => $name])->one() != null) {
                 \Yii::$app->session->setFlash('error', 'Tên đã được người khác chọn, xin chọn lại!');
                 return $this->redirect(['site/signin']);
             }
@@ -34,7 +34,19 @@ class PlayController extends \yii\web\Controller {
         $player->lastPingTime = time();
         $player->save();
 
-        return $this->render('index');
+        return $this->render('index', ['player' => $player]);
+    }
+
+    public function actionPing() {
+        session_start();
+        $player = \app\models\Player::findOne(['id' => session_id()]);
+        if ($player != null) {
+            $player->lastPingTime = time();
+            $player->save();
+            echo \yii\helpers\Json::encode([
+                'event' => 0,
+            ]);
+        }
     }
 
 }

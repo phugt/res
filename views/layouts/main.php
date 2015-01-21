@@ -37,7 +37,7 @@ AppAsset::register($this);
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
                     ['label' => 'Đề thi', 'url' => ['/question/list']],
-                    ['label' => 'Làm bài', 'url' => ['/session/start']],
+                    ['label' => 'Làm bài', 'url' => ['/session/list']],
                     ['label' => 'Thí sinh', 'url' => ['/player/list']],
                     ['label' => 'Thoát', 'url' => ['/site/signout']],
                 ],

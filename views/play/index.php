@@ -1,9 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 /* @var $this \yii\web\View */
@@ -27,35 +25,50 @@ AppAsset::register($this);
         <div class="wrap">
             <?php
             NavBar::begin([
-                'brandLabel' => 'HỆ THỐNG TRẮC NGHIỆM',
+                'brandLabel' => 'Làm trắc nghiệm',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => 'Đề thi', 'url' => ['/question/list']],
-                    ['label' => 'Làm bài', 'url' => ['/session/start']],
-                    ['label' => 'Thí sinh', 'url' => ['/player/list']],
-                    ['label' => 'Thoát', 'url' => ['/site/signout']],
-                ],
-            ]);
             NavBar::end();
             ?>
 
-            <div class="container">
+            <div class="container" id="content">
             </div>
         </div>
 
         <footer class="footer">
             <div class="container">
-                <p class="pull-left">&copy; PhuGT <?= date('Y') ?></p>
+                <div class="pull-left">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="txt-answer">Trả lời</label>
+                            <input type="text" class="form-control" id="txt-answer" placeholder="Nhập câu trả lời">
+                        </div>
+                        <button type="button" id="btn-answer" class="btn btn-default">Gửi</button>
+                    </form>
+                </div>
+                <div class="pull-right text-danger"><strong style="font-size: 30px">Chưa có câu hỏi</strong></div>
             </div>
         </footer>
 
         <?php $this->endBody() ?>
+        <script src="//js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            // Enable pusher logging - don't include this in production
+            Pusher.log = function (message) {
+                if (window.console && window.console.log) {
+                    window.console.log(message);
+                }
+            };
+
+            var pusher = new Pusher('0ae16f5aa4dfbdc8111f');
+            var channel = pusher.subscribe('test_channel');
+            channel.bind('my_event', function (data) {
+                alert(data.message);
+            });
+        </script>
     </body>
 </html>
 <?php $this->endPage() ?>
