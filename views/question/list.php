@@ -35,18 +35,22 @@ use yii\helpers\Url;
             <div class="table-responsive">
                 <?php
                 
+                function displayContent($model) {
+                    return yii\helpers\StringHelper::truncate(strip_tags($model->content), 100);
+                }
+                
                 echo GridView::widget([
                     'dataProvider' => $data,
                     'columns' => [
                         [
                             'class' => DataColumn::className(),
-                            'attribute' => 'id',
+                            'attribute' => 'position',
                             'format' => 'text',
                         ],
                         [
-                            'class' => DataColumn::className(),
-                            'attribute' => 'position',
-                            'format' => 'text',
+                            'class' => Column::className(),
+                            'header' => 'Tóm tắt nội dung',
+                            'content' => 'displayContent'
                         ],
                         [
                             'class' => DataColumn::className(),

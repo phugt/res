@@ -44,5 +44,10 @@ class SiteController extends \yii\web\Controller {
 
         return $this->render('signin', ['model' => $model, 'error' => $error]);
     }
+    
+    public function actionSignout(){
+        \Yii::$app->session->set('signed', null);
+        return $this->redirect(['site/signin']);
+    }
 
 }

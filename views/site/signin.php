@@ -38,6 +38,11 @@ SigninAsset::register($this);
                 <h2 class="form-signin-heading">Học sinh</h2>
                 <label for="inputName" class="sr-only">Họ và tên</label>
                 <input type="text" name="name" id="inputName" class="form-control single" placeholder="Họ và tên" required>
+                <?php if (Yii::$app->session->hasFlash('error')): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?= Yii::$app->session->getFlash('error') ?>
+                    </div>
+                <?php endif; ?>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Đăng nhập</button>
             </form>
         </div> <!-- /container -->

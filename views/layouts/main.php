@@ -39,6 +39,7 @@ AppAsset::register($this);
                     ['label' => 'Đề thi', 'url' => ['/question/list']],
                     ['label' => 'Làm bài', 'url' => ['/session/start']],
                     ['label' => 'Thí sinh', 'url' => ['/player/list']],
+                    ['label' => 'Thoát', 'url' => ['/site/signout']],
                 ],
             ]);
             NavBar::end();

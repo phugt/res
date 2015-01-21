@@ -31,7 +31,7 @@ class Question extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['position', 'content', 'time', 'answer', 'createTime', 'updateTime'], 'required'],
+            [['position', 'time', 'answer'], 'required'],
             [['position', 'time', 'createTime', 'updateTime'], 'integer'],
             [['content'], 'string'],
             [['answer'], 'string', 'max' => 32]
@@ -47,8 +47,8 @@ class Question extends \yii\db\ActiveRecord
             'id' => 'Mã câu hỏi',
             'position' => 'Thứ tự',
             'content' => 'Nội dung',
-            'time' => 'Thời gian',
-            'answer' => 'Câu trả lời',
+            'time' => 'Thời gian trả lời (giây)',
+            'answer' => 'Câu trả lời đúng',
             'createTime' => 'Tạo lúc',
             'updateTime' => 'Sửa lúc',
         ];
