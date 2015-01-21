@@ -31,9 +31,13 @@ class QuestionController extends \yii\web\Controller {
     
     public function actionCreate(){
         $new = new \app\models\Question();
-        if ($new->load(\Yii::$app->request->post()) && $new->save()) {
-            \Yii::$app->session->setFlash('success', 'Thêm câu hỏi!');
-            return $this->redirect(['index']);
+        if ($new->load(\Yii::$app->request->post())) {
+            $new->createTime = time();
+            $new->updateTime = time();
+            if($new->save()){
+                \Yii::$app->session->setFlash('success', 'Thêm câu hỏi!');
+                return $this->redirect(['list']);
+            }
         }
 
         return $this->render('create', ['model' => $new]);
