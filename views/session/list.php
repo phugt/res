@@ -34,15 +34,15 @@ use yii\helpers\Url;
         <div class="col-lg-12">
             <div class="table-responsive">
                 <?php
-                
+
                 function displayContent($model) {
                     return yii\helpers\StringHelper::truncate(strip_tags($model->content), 100);
                 }
-                
+
                 function displayAction($model) {
-                    return '<div class="btn-group"><button class="btn btn-primary">Làm bài</button><button class="btn btn-info">Xem kết quả</button></div>';
+                    return '<div class="btn-group"><button onclick="session.start(' . $model->id . ')" class="btn btn-primary">Làm bài</button><button class="btn btn-info">Xem kết quả</button></div>';
                 }
-                
+
                 echo GridView::widget([
                     'dataProvider' => $data,
                     'columns' => [
