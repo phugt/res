@@ -30,7 +30,7 @@ class Player extends \yii\db\ActiveRecord
             [['id', 'name', 'lastPingTime'], 'required'],
             [['lastPingTime'], 'integer'],
             [['id'], 'string', 'max' => 64],
-            [['name'], 'string', 'max' => 150]
+            [['name'], 'Tên học sinh', 'max' => 150]
         ];
     }
 
