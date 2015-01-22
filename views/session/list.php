@@ -40,7 +40,7 @@ use yii\helpers\Url;
                 }
 
                 function displayAction($model) {
-                    return '<div class="btn-group"><button onclick="session.start(' . $model->id . ')" class="btn btn-primary">Làm bài</button><button class="btn btn-info">Xem kết quả</button></div>';
+                    return '<div for="' . $model->id . '" class="btn-group"><button onclick="session.start(' . $model->id . ')" class="btn btn-primary">Làm bài</button><button disabled class="btn btn-info">Xem kết quả</button></div>';
                 }
 
                 echo GridView::widget([

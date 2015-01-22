@@ -11,9 +11,6 @@ class QuestionController extends \yii\web\Controller {
 
     public function init() {
         parent::init();
-        if (\Yii::$app->session->get('signed') == null) {
-            return $this->redirect(['site/signin']);
-        }
     }
 
     public function actionList() {
@@ -82,7 +79,7 @@ class QuestionController extends \yii\web\Controller {
     }
 
     public function actionDelete($id) {
-        $old = Style::findOne($id);
+        $old = \app\models\Question::findOne($id);
         if (isset($old)) {
             \Yii::$app->session->setFlash('success', 'Xóa câu hỏi thành công!');
             $old->delete();

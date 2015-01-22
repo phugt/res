@@ -41,15 +41,15 @@ AppAsset::register($this);
         <footer class="footer">
             <div class="container">
                 <div class="pull-left">
-                    <form class="form-inline">
+                    <div class="form-inline">
                         <div class="form-group">
                             <label for="txt-answer">Trả lời</label>
-                            <input type="text" class="form-control" id="txt-answer" placeholder="Nhập câu trả lời">
+                            <input type="text" class="form-control" disabled="" id="txt-answer" placeholder="Nhập câu trả lời">
                         </div>
-                        <button type="button" id="btn-answer" class="btn btn-default">Gửi</button>
-                    </form>
+                        <button type="button" id="btn-answer" disabled="" class="btn btn-primary">Trả lời</button>
+                    </div>
                 </div>
-                <div class="pull-right text-danger"><strong style="font-size: 30px">Chưa có câu hỏi</strong></div>
+                <div class="pull-right text-danger"><strong id="lbl-time" style="font-size: 30px">Chưa có câu hỏi</strong></div>
             </div>
         </footer>
 
@@ -63,10 +63,59 @@ AppAsset::register($this);
                 }
             };
 
+            var interval = null;
+            var timeout = null;
+
             var pusher = new Pusher('0ae16f5aa4dfbdc8111f');
-            var channel = pusher.subscribe('test_channel');
-            channel.bind('my_event', function (data) {
-                alert(data.message);
+            var channel = pusher.subscribe('res');
+            channel.bind('START', function (data) {
+                $.ajax({
+                    url: './question',
+                    data: {id: data.questionId},
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.success) {
+                            $('#content').html(result.data.content);
+                            $('#txt-answer').val('');
+                            $('#txt-answer').removeAttr('disabled');
+                            $('#btn-answer').removeAttr('disabled');
+                        }
+                    }
+                });
+                clearInterval(interval);
+                clearTimeout(timeout);
+                setTimeout(function () {
+                    $('#content').html('<div class="alert alert-danger">Hết thời gian</div>');
+                    clearInterval(interval);
+                    $('#lbl-time').text('Hết thời gian');
+                    $('#txt-answer').attr('disabled', 'disabled');
+                    $('#btn-answer').attr('disabled', 'disabled');
+                }, data.time * 1000);
+
+                $('#lbl-time').text('Còn lại ' + data.time-- + ' giây');
+                interval = setInterval(function () {
+                    $('#lbl-time').text('Còn lại ' + data.time-- + ' giây');
+                }, 1000);
+
+                $('#btn-answer').unbind('click');
+                $('#btn-answer').click(function () {
+                    $('#txt-answer').attr('disabled', 'disabled');
+                    $('#btn-answer').attr('disabled', 'disabled');
+                    $('#btn-answer').text('Xin đợi...');
+                    $.ajax({
+                        url: './answer',
+                        data: {
+                            questionId: data.questionId,
+                            sessionId: data.sessionId,
+                            ans: $('#txt-answer').val()
+                        },
+                        dataType: 'JSON',
+                        success: function (result) {
+                            alert(result.message);
+                            $('#btn-answer').text('Trả lời');
+                        }
+                    });
+                });
             });
         </script>
     </body>
